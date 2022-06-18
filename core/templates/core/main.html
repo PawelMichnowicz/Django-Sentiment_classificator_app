@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Sentiment Analysis</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+</head>
+<body>
+
+
+
+<!-- Header -->
+<header class="w3-container w3-theme w3-padding" id="myHeader">
+  <div class="w3-center">
+  <h2 class="w3-xxxlarge w3-animate-bottom">Check the sentiment of your sentence:</h2>
+    <div class="w3-padding-32">
+    </div>
+
+    <form action="." method="post">
+        {% csrf_token %}
+        {{ form }}
+        <button class="w3-btn w3-dark-grey w3-hover-light-grey" type="input" style="font-weight:900;">Check</button>
+    </form>
+  </div>
+
+</header>
+
+<body>
+  {% load static %}
+
+  <div class="w3-container">
+  {% if sentence %}
+    <br>
+    <div class='w3-container w3-card w3-white w3-margin-bottom w3-light-grey'>
+    <center><h3><b>{{ sentence.text }}</b></h3>  </center>
+    </div></div>
+
+    <center>
+    <div class="w3-third w3-container">
+      {% if sentence.result == 1 %}
+        <img src="{% static 'core/happy.png' %}" alt="My image">
+      {% else %}
+        <img src="{% static 'core/sad.png' %}" alt="My image">
+      {% endif %}
+      <h3> Regresja logistyczna </h3>
+    </div>
+
+    <div class="w3-third w3-container">
+      
+      {% if sentence.result2 == 1 %}
+        <img src="{% static 'core/happy.png' %}" alt="My image">
+      {% else %}
+        <img src="{% static 'core/sad.png' %}" alt="My image">
+      {% endif %}
+      <h3> Klasyfikator Naiwnego Bayesa </h3>
+    </div>
+
+    <div class="w3-third w3-container">
+      
+      {% if sentence.result3 == 1 %}
+        <img src="{% static 'core/happy.png' %}" alt="My image">
+      {% else %}
+        <img src="{% static 'core/sad.png' %}" alt="My image">
+      {% endif %}
+      <h3> Maszyna Wektorów Nośnych</h3>
+    </div>
+  </center>
+
+  </div>
+
+
+
+  {% endif %}
+  _________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+
+  <h2> Last 5 input sentences: </h2>
+  {% for sent in sentences %}
+  
+    <div class='panel w3-leftbar  {% if sent.positive > 1 %} w3-border-green  w3-pale-green {% else %} w3-border-red  w3-pale-red  {% endif%}' >
+      <b><h5 style="font-weight:bold;{% if sent.positive > 1 %} color:green {% else %} color:red  {% endif%}"> {{ sent.positive }}/3 <h5> </b>
+      <h5>{{sent.text}}</h5>
+      
+    </div>
+    
+  </div>
+  {% endfor %}
+  
+
